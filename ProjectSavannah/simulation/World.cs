@@ -24,9 +24,9 @@ namespace ProjectSavannah.simulation
 
         public struct cell
         {
-            public Mammal? mammal;
-            public Bird? bird;
-            public Reptile? reptile;
+            public Animal? mammal;
+            public Animal? bird;
+            public Animal? reptile;
             public List<Animal> deadAnimals;
             public int x;
             public int y;

@@ -18,7 +18,7 @@ namespace ProjectSavannah.domain
         public int Lifespan { get; private set; }
         public bool IsAlive { get; private set; }
         public position CurrentPosition { get; set; }
-        private readonly World _world;
+        internal readonly World _world;
         private bool _canMove;
 
         public Animal(int x, int y, int lifespan, int speed, World world)
@@ -62,33 +62,27 @@ namespace ProjectSavannah.domain
             int newY = CurrentPosition.y;
             for (int i = 1; i <= Speed; i++) 
             {
-                int dx = 0;
-                int dy = 0;
                 switch (randomDirection)
                 {
                     case Direction.NORTH:
-                        dy = -1;
+                        newY += -1;
                         break;
                     case Direction.SOUTH:
-                        dy = 1;
+                        newY += 1;
                         break;
                     case Direction.EAST:
-                        dx = 1;
+                        newX += 1;
                         break;
                     case Direction.WEST:
-                        dx = -1;
+                        newX += -1;
                         break;
                 }
-                if (_world.WithinBoundaries(newX + dx, newY + dy) && _canMove)
+                if (_world.WithinBoundaries(newX, newY) && _canMove)
                 {
-                    var nextCell = _world.GetCell((newX + dx), (newY + dy));
+                    var nextCell = _world.GetCell((newX), (newY));
                     Handle(nextCell);
                 }
-                else
-                {
-                    _blockMovement();
-                    break;
-                } 
+                else break;
             }
 
         }
@@ -100,5 +94,8 @@ namespace ProjectSavannah.domain
         public abstract void Behavior();
 
         public abstract void Handle(World.cell cell);
+
+        internal abstract void UpdatePosition(World.cell cell);
+
     }
 }

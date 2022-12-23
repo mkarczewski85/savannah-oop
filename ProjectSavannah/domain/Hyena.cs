@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSavannah.domain
 {
-    public class Hyena : Animal, Mammal
+    public class Hyena : Animal, Mammal, Predator
     {
         public Hyena(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
         {
