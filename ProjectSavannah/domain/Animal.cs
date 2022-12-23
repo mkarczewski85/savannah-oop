@@ -86,7 +86,6 @@ namespace ProjectSavannah.domain
                 }
                 else
                 {
-
                     _blockMovement();
                     break;
                 } 
@@ -94,15 +93,9 @@ namespace ProjectSavannah.domain
 
         }
 
-        private void _blockMovement() 
-        {
-            _canMove = false;
-        }
+        internal void _blockMovement() => _canMove = false;
 
-        private void _enableMovement()
-        {
-            _canMove = true;
-        }
+        internal void _enableMovement() => _canMove = true;
 
         public abstract void Behavior();
 
