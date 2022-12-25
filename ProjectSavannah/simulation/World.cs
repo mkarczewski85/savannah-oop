@@ -12,12 +12,15 @@ namespace ProjectSavannah.simulation
     {
 
         private cell[,] grid;
+
+        private List<Animal> allAnimals;
         public int xSize { get; private set; }
         public int ySize { get; private set; }
 
         public World(int xSize, int ySize)
         {
             grid = new cell[xSize, ySize];
+            allAnimals = new List<Animal>();
             this.xSize = xSize;
             this.ySize = ySize;
         }
@@ -27,7 +30,7 @@ namespace ProjectSavannah.simulation
             public Animal? mammal;
             public Animal? bird;
             public Animal? reptile;
-            public List<Animal> deadAnimals;
+            public Stack<Animal> deadAnimals;
             public int x;
             public int y;
 
@@ -38,8 +41,18 @@ namespace ProjectSavannah.simulation
                 mammal = null;
                 bird = null;
                 reptile = null;
-                deadAnimals = new List<Animal>();
+                deadAnimals = new Stack<Animal>();
             }
+        }
+
+        public void Initialize() 
+        { 
+            // TODO
+        }
+
+        public void Run() 
+        { 
+            //TODO
         }
 
         public cell GetCell(int x, int y) 

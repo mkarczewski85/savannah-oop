@@ -45,7 +45,7 @@ namespace ProjectSavannah.domain
             if (rand.NextBool(50))
             {
                 cell.reptile?._kill();
-                cell.deadAnimals.Add(cell.reptile);
+                cell.deadAnimals.Push(cell.reptile);
                 cell.reptile = null;
                 _blockMovement();
             }

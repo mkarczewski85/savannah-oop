@@ -18,14 +18,31 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        public override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(World.cell cell)
         {
-            throw new NotImplementedException();
+            if (Mammal.IsCellEmpty(cell))
+            {
+                UpdatePosition(cell);
+                if (cell.deadAnimals.TryPop(out var animal))
+                {
+                    // TODO
+                    
+                }
+            }
+            else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell cell)
+        internal override void UpdatePosition(World.cell currentCell)
         {
-            throw new NotImplementedException();
+            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
+            prevCell.mammal = null;
+            CurrentPosition = new position(currentCell.x, currentCell.y);
+            currentCell.mammal = this;
+        }
+
+        public void Hunt(World.cell cell)
+        {
+            throw new NotImplementedException("Hyenas do not hunt!");
         }
     }
 }
