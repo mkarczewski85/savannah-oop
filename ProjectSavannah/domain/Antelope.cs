@@ -18,14 +18,21 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        public override void Behavior()
+        internal override void HandleBehavior(World.cell cell)
         {
-            throw new NotImplementedException();
+            if (Mammal.IsCellEmpty(cell))
+            {
+                UpdatePosition(cell);
+            }
+            else _blockMovement();
         }
 
-        public override void Handle(World.cell cell)
+        internal override void UpdatePosition(World.cell currentCell)
         {
-            throw new NotImplementedException();
+            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
+            prevCell.mammal = null;
+            CurrentPosition = new position(currentCell.x, currentCell.y);
+            currentCell.mammal = this;
         }
     }
 }

@@ -18,12 +18,12 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        public override void Behavior()
+        public override void HandleBehavior(World.cell cell)
         {
             throw new NotImplementedException();
         }
 
-        public override void Handle(World.cell cell)
+        internal override void UpdatePosition(World.cell cell)
         {
             throw new NotImplementedException();
         }

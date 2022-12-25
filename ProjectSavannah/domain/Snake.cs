@@ -1,4 +1,5 @@
 ﻿using ProjectSavannah.simulation;
+using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -16,14 +17,38 @@ namespace ProjectSavannah.domain
         public int VenomAmount { get; set; }
         public int VenomRegenerationRate { get; set; }
 
-        public override void Behavior()
+
+        internal override void HandleBehavior(World.cell cell)
         {
-            throw new NotImplementedException();
+            if (Reptile.IsCellEmpty(cell))
+            {
+                UpdatePosition(cell);
+                if (!Mammal.IsCellEmpty(cell))
+                {
+                    Bite(cell);
+                }
+            }
+            else _blockMovement();
         }
 
-        public override void Handle(World.cell cell)
+        internal override void UpdatePosition(World.cell currentCell)
         {
-            throw new NotImplementedException();
+            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
+            prevCell.reptile = null;
+            CurrentPosition = new position(currentCell.x, currentCell.y);
+            currentCell.reptile = this;
+        }
+
+        public void Bite(World.cell cell)
+        {
+            Random rand = new Random();
+            if (rand.NextBool(50))
+            {
+                cell.mammal?._kill();
+                cell.deadAnimals.Add(cell.mammal);
+                cell.mammal = null;
+                _blockMovement();
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using ProjectSavannah.simulation;
+using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,14 +18,37 @@ namespace ProjectSavannah.domain
         public int FoodAppetite { get; set; }
         public int CurrentFoodAmount { get; set; }
 
-        public override void Behavior()
+        internal override void HandleBehavior(World.cell cell)
         {
-            throw new NotImplementedException();
+            if (Bird.IsCellEmpty(cell))
+            {
+                UpdatePosition(cell);
+                if (!Reptile.IsCellEmpty(cell))
+                {
+                    Catch(cell);
+                }
+            }
+            else _blockMovement();
         }
 
-        public override void Handle(World.cell cell)
+        internal override void UpdatePosition(World.cell currentCell)
         {
-            throw new NotImplementedException();
+            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
+            prevCell.bird = null;
+            CurrentPosition = new position(currentCell.x, currentCell.y);
+            currentCell.bird = this;
+        }
+
+        public void Catch(World.cell cell)
+        {
+            Random rand = new Random();
+            if (rand.NextBool(50))
+            {
+                cell.reptile?._kill();
+                cell.deadAnimals.Add(cell.reptile);
+                cell.reptile = null;
+                _blockMovement();
+            }
         }
     }
 }

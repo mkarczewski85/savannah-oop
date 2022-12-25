@@ -3,6 +3,7 @@ using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
 using static ProjectSavannah.domain.Animal;
@@ -80,20 +81,20 @@ namespace ProjectSavannah.domain
                 if (_world.WithinBoundaries(newX, newY) && _canMove)
                 {
                     var nextCell = _world.GetCell((newX), (newY));
-                    Handle(nextCell);
+                    HandleBehavior(nextCell);
                 }
                 else break;
             }
 
         }
 
+        internal void _kill() => IsAlive = false;
+
         internal void _blockMovement() => _canMove = false;
 
         internal void _enableMovement() => _canMove = true;
 
-        public abstract void Behavior();
-
-        public abstract void Handle(World.cell cell);
+        internal abstract void HandleBehavior(World.cell cell);
 
         internal abstract void UpdatePosition(World.cell cell);
 

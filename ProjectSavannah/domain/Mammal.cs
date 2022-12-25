@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSavannah.simulation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,5 +13,10 @@ namespace ProjectSavannah.domain
         int WaterAppetite { get; set; }
         int CurrentFoodAmount { get; set; }
         int CurrentWaterAmount { get; set; }
+
+        static bool IsCellEmpty(World.cell cell)
+        {
+            return cell.mammal == null;
+        }
     }
 }

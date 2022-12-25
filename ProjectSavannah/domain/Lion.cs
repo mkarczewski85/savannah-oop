@@ -23,15 +23,9 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        public override void Behavior()
+        internal override void HandleBehavior(World.cell cell)
         {
-            
-            throw new NotImplementedException();
-        }
-
-        public override void Handle(World.cell cell)
-        {
-            if (_cellIsEmpty(cell)) {
+            if (Mammal.IsCellEmpty(cell)) {
                 UpdatePosition(cell);
             }
             else _resolveCollision(cell);
@@ -39,13 +33,12 @@ namespace ProjectSavannah.domain
 
         private void _resolveCollision(World.cell cell)
         {
-            if (cell.mammal is Predator) return;        
+            if (cell.mammal is Predator)
+            {
+                _blockMovement();
+                return; 
+            }       
             Hunt(cell);
-        }
-
-        private bool _cellIsEmpty(World.cell cell)
-        {
-            return cell.mammal == null && cell.reptile == null;
         }
 
         internal override void UpdatePosition(World.cell currentCell)
@@ -61,8 +54,10 @@ namespace ProjectSavannah.domain
             Random rand = new Random();
             if (rand.NextBool(20))
             {
+                cell.mammal?._kill();
                 cell.deadAnimals.Add(cell.mammal);
                 UpdatePosition(cell);
+                _blockMovement();
             }
         }
     }

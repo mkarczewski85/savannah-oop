@@ -1,4 +1,5 @@
-﻿using System;
+﻿using ProjectSavannah.simulation;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -10,5 +11,12 @@ namespace ProjectSavannah.domain
     {
         int VenomAmount { get; set; }
         int VenomRegenerationRate { get; set; }
+
+        void Bite(World.cell cell);
+
+        static bool IsCellEmpty(World.cell cell)
+        {
+            return cell.reptile == null;
+        }
     }
 }

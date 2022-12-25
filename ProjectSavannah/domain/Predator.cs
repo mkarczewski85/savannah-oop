@@ -9,5 +9,8 @@ namespace ProjectSavannah.domain
 {
     internal interface Predator
     {
+
+        void Hunt(World.cell cell);
+
     }
 }
