@@ -10,7 +10,7 @@ namespace ProjectSavannah.domain
 {
     public class TokoBird : Animal, Bird
     {
-        public TokoBird(World.cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public TokoBird(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -23,7 +23,7 @@ namespace ProjectSavannah.domain
             if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
-                if (!cell.IsEmpty(Type.GetType("Reptile")))
+                if (!cell.IsEmpty(Reptile.GetType()))
                 {
                     Catch(cell);
                 }

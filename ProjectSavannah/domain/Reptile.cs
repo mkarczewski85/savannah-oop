@@ -14,5 +14,10 @@ namespace ProjectSavannah.domain
 
         void Bite(Cell cell);
 
+        static Type GetType()
+        { 
+            return typeof(Reptile);
+        }
+
     }
 }

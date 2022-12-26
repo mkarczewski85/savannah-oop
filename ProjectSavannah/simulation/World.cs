@@ -15,7 +15,7 @@ namespace ProjectSavannah.simulation
         private Cell[,] _grid;
         public int xSize { get; private set; }
         public int ySize { get; private set; }
-        private Random rand = new Random();
+        private Random random = new Random();
 
         public World(int xSize, int ySize)
         {
@@ -32,7 +32,7 @@ namespace ProjectSavannah.simulation
         public void AddAnimalAtRandom(Animal animal)
         {
             Cell randomCell;
-            do randomCell = rand.NextItem(_grid);
+            do randomCell = random.NextItem(_grid);
             while (!randomCell.IsEmpty(animal));
         }
 

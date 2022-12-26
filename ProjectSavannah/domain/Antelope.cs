@@ -9,7 +9,7 @@ namespace ProjectSavannah.domain
 {
     public class Antelope : Animal, Mammal
     {
-        public Antelope(World.cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public Antelope(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -18,21 +18,21 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        internal override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(Cell cell)
         {
-            if (Mammal.IsCellEmpty(cell))
+            if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
             }
             else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell newCell)
+        internal override void UpdatePosition(Cell newCell)
         {
             var prevCell = CurrentCell;
-            prevCell.mammal = null;
+            prevCell.Mammal = null;
             CurrentCell = newCell;
-            newCell.mammal = this;
+            newCell.SetAnimal(this);
         }
     }
 }

@@ -23,7 +23,7 @@ namespace ProjectSavannah.domain
             if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
-                if (cell.IsEmpty(Type.GetType("Mammal")))
+                if (cell.IsEmpty(Mammal.GetType()))
                 {
                     Bite(cell);
                 }
