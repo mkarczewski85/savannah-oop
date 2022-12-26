@@ -18,32 +18,20 @@ namespace ProjectSavannah.domain
         public int Speed { get; private set; }
         public int Lifespan { get; private set; }
         public bool IsAlive { get; private set; }
-        public position CurrentPosition { get; set; }
+        internal Cell CurrentCell;
         internal readonly World _world;
         private bool _canMove;
 
-        public Animal(int x, int y, int lifespan, int speed, World world)
+        public Animal(Cell cell, int lifespan, int speed, World world)
         {
             Id = Guid.NewGuid();
-            CurrentPosition = new position(x, y);
             Lifespan = lifespan;
             Speed = speed;
             IsAlive = true;
             Age = 0;
             _world = world;
+            CurrentCell = cell;
             _canMove = true;
-        }
-
-        public struct position
-        {
-            public int x { get; set; }
-            public int y { get; set; }
-
-            public position(int x, int y)
-            {
-                this.x = x;
-                this.y = y; 
-            }
         }
 
         public enum Direction
@@ -59,9 +47,9 @@ namespace ProjectSavannah.domain
             _enableMovement();
             var random = new Random();
             Direction randomDirection = random.NextEnum<Direction>();
-            int newX = CurrentPosition.x;
-            int newY = CurrentPosition.y;
-            for (int i = 1; i <= Speed; i++) 
+            int newX = CurrentCell.x;
+            int newY = CurrentCell.y;
+            for (int i = 0; i < Speed; i++) 
             {
                 switch (randomDirection)
                 {
@@ -94,9 +82,9 @@ namespace ProjectSavannah.domain
 
         internal void _enableMovement() => _canMove = true;
 
-        internal abstract void HandleBehavior(World.cell cell);
+        internal abstract void HandleBehavior(Cell cell);
 
-        internal abstract void UpdatePosition(World.cell cell);
+        internal abstract void UpdatePosition(Cell cell);
 
     }
 }

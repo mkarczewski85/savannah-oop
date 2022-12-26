@@ -14,9 +14,16 @@ namespace ProjectSavannah.util
             return (T) values.GetValue(random.Next(values.Length));
         }
 
-        public static bool NextBool(this Random r, int truePercentage = 50)
+        public static bool NextBool(this Random random, int truePercentage = 50)
         {
-            return r.NextDouble() < truePercentage / 100.0;
+            return random.NextDouble() < truePercentage / 100.0;
+        }
+
+        public static T NextItem<T>(this Random random, T[,] array)
+        {
+            int row = random.Next(array.GetLength(0));
+            int column = random.Next(array.GetLength(1));
+            return array[row, column];
         }
 
     }

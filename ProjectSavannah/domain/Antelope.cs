@@ -9,7 +9,7 @@ namespace ProjectSavannah.domain
 {
     public class Antelope : Animal, Mammal
     {
-        public Antelope(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
+        public Antelope(World.cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -27,12 +27,12 @@ namespace ProjectSavannah.domain
             else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell currentCell)
+        internal override void UpdatePosition(World.cell newCell)
         {
-            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
+            var prevCell = CurrentCell;
             prevCell.mammal = null;
-            CurrentPosition = new position(currentCell.x, currentCell.y);
-            currentCell.mammal = this;
+            CurrentCell = newCell;
+            newCell.mammal = this;
         }
     }
 }

@@ -10,7 +10,7 @@ namespace ProjectSavannah.domain
 {
     public class TokoBird : Animal, Bird
     {
-        public TokoBird(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
+        public TokoBird(World.cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -18,12 +18,12 @@ namespace ProjectSavannah.domain
         public int FoodAppetite { get; set; }
         public int CurrentFoodAmount { get; set; }
 
-        internal override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(Cell cell)
         {
-            if (Bird.IsCellEmpty(cell))
+            if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
-                if (!Reptile.IsCellEmpty(cell))
+                if (!cell.IsEmpty(Type.GetType("Reptile")))
                 {
                     Catch(cell);
                 }
@@ -31,22 +31,22 @@ namespace ProjectSavannah.domain
             else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell currentCell)
+        internal override void UpdatePosition(Cell newCell)
         {
-            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
-            prevCell.bird = null;
-            CurrentPosition = new position(currentCell.x, currentCell.y);
-            currentCell.bird = this;
+            var prevCell = CurrentCell;
+            prevCell.Bird = null;
+            CurrentCell = newCell;
+            newCell.SetAnimal(this);
         }
 
-        public void Catch(World.cell cell)
+        public void Catch(Cell cell)
         {
             Random rand = new Random();
             if (rand.NextBool(50))
             {
-                cell.reptile?._kill();
-                cell.deadAnimals.Push(cell.reptile);
-                cell.reptile = null;
+                cell.Reptile?._kill();
+                cell.deadAnimals.Push(cell.Reptile);
+                cell.Reptile = null;
                 _blockMovement();
             }
         }

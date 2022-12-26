@@ -13,11 +13,7 @@ namespace ProjectSavannah.domain
         int FoodAppetite { get; set; }
         int CurrentFoodAmount { get; set; }
 
-        void Catch(World.cell cell);
+        void Catch(Cell cell);
 
-        static bool IsCellEmpty(World.cell cell)
-        {
-            return cell.bird == null;
-        }
     }
 }

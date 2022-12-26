@@ -10,7 +10,7 @@ namespace ProjectSavannah.domain
 {
     public class Snake : Animal, Reptile
     {
-        public Snake(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
+        public Snake(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -18,12 +18,12 @@ namespace ProjectSavannah.domain
         public int VenomRegenerationRate { get; set; }
 
 
-        internal override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(Cell cell)
         {
-            if (Reptile.IsCellEmpty(cell))
+            if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
-                if (!Mammal.IsCellEmpty(cell))
+                if (cell.IsEmpty(Type.GetType("Mammal")))
                 {
                     Bite(cell);
                 }
@@ -31,22 +31,22 @@ namespace ProjectSavannah.domain
             else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell currentCell)
+        internal override void UpdatePosition(Cell newCell)
         {
-            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
-            prevCell.reptile = null;
-            CurrentPosition = new position(currentCell.x, currentCell.y);
-            currentCell.reptile = this;
+            var prevCell = CurrentCell;
+            prevCell.Reptile = null;
+            CurrentCell = newCell;
+            newCell.SetAnimal(this);
         }
 
-        public void Bite(World.cell cell)
+        public void Bite(Cell cell)
         {
             Random rand = new Random();
             if (rand.NextBool(50))
             {
-                cell.mammal?._kill();
-                cell.deadAnimals.Push(cell.mammal);
-                cell.mammal = null;
+                cell.Mammal?._kill();
+                cell.deadAnimals.Push(cell.Mammal);
+                cell.Mammal = null;
                 _blockMovement();
             }
         }

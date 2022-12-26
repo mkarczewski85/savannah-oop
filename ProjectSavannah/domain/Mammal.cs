@@ -14,9 +14,5 @@ namespace ProjectSavannah.domain
         int CurrentFoodAmount { get; set; }
         int CurrentWaterAmount { get; set; }
 
-        static bool IsCellEmpty(World.cell cell)
-        {
-            return cell.mammal == null;
-        }
     }
 }

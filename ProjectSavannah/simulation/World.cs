@@ -1,4 +1,5 @@
 ﻿using ProjectSavannah.domain;
+using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,58 +12,33 @@ namespace ProjectSavannah.simulation
     public class World
     {
 
-        private cell[,] grid;
-
-        private List<Animal> allAnimals;
+        private Cell[,] _grid;
         public int xSize { get; private set; }
         public int ySize { get; private set; }
+        private Random rand = new Random();
 
         public World(int xSize, int ySize)
         {
-            grid = new cell[xSize, ySize];
-            allAnimals = new List<Animal>();
+            _grid = new Cell[xSize, ySize];
             this.xSize = xSize;
             this.ySize = ySize;
         }
 
-        public struct cell
+        public Cell GetCell(int x, int y) 
         {
-            public Animal? mammal;
-            public Animal? bird;
-            public Animal? reptile;
-            public Stack<Animal> deadAnimals;
-            public int x;
-            public int y;
-
-            public cell(int x, int y)
-            {
-                this.x = x;
-                this.y = y;
-                mammal = null;
-                bird = null;
-                reptile = null;
-                deadAnimals = new Stack<Animal>();
-            }
+            return _grid[x,y];
         }
 
-        public void Initialize() 
-        { 
-            // TODO
-        }
-
-        public void Run() 
-        { 
-            //TODO
-        }
-
-        public cell GetCell(int x, int y) 
+        public void AddAnimalAtRandom(Animal animal)
         {
-            return grid[x,y];
+            Cell randomCell;
+            do randomCell = rand.NextItem(_grid);
+            while (!randomCell.IsEmpty(animal));
         }
 
         public bool WithinBoundaries(int x, int y)
         {
-            return (x >= 0 && y >= 0 && x < this.xSize && y < this.ySize);
+            return (x >= 0 && y >= 0 && x < xSize && y < ySize);
         }
 
     }

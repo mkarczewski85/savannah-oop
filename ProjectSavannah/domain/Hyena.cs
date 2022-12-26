@@ -9,7 +9,7 @@ namespace ProjectSavannah.domain
 {
     public class Hyena : Animal, Mammal, Predator
     {
-        public Hyena(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
+        public Hyena(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
         }
 
@@ -18,9 +18,9 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        internal override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(Cell cell)
         {
-            if (Mammal.IsCellEmpty(cell))
+            if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
                 if (cell.deadAnimals.TryPop(out var animal))
@@ -32,15 +32,15 @@ namespace ProjectSavannah.domain
             else _blockMovement();
         }
 
-        internal override void UpdatePosition(World.cell currentCell)
+        internal override void UpdatePosition(Cell newCell)
         {
-            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
-            prevCell.mammal = null;
-            CurrentPosition = new position(currentCell.x, currentCell.y);
-            currentCell.mammal = this;
+            var prevCell = CurrentCell;
+            prevCell.Mammal = null;
+            CurrentCell = newCell;
+            newCell.SetAnimal(this);
         }
 
-        public void Hunt(World.cell cell)
+        public void Hunt(Cell cell)
         {
             throw new NotImplementedException("Hyenas do not hunt!");
         }

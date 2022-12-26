@@ -10,12 +10,8 @@ namespace ProjectSavannah.domain
 {
     public class Lion : Animal, Mammal, Predator
     {
-        public Lion(int x, int y, int lifespan, int speed, World world) : base(x, y, lifespan, speed, world)
+        public Lion(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
         {
-            FoodAppetite = 50;
-            WaterAppetite = 50;
-            CurrentFoodAmount = 0;
-            CurrentWaterAmount = 20;
         }
 
         public int FoodAppetite { get; set; }
@@ -23,17 +19,17 @@ namespace ProjectSavannah.domain
         public int CurrentFoodAmount { get; set; }
         public int CurrentWaterAmount { get; set; }
 
-        internal override void HandleBehavior(World.cell cell)
+        internal override void HandleBehavior(Cell cell)
         {
-            if (Mammal.IsCellEmpty(cell)) {
+            if (cell.IsEmpty(this)) {
                 UpdatePosition(cell);
             }
             else _resolveCollision(cell);
         }
 
-        private void _resolveCollision(World.cell cell)
+        private void _resolveCollision(Cell cell)
         {
-            if (cell.mammal is Predator)
+            if (cell.Mammal is Predator)
             {
                 _blockMovement();
                 return; 
@@ -41,21 +37,21 @@ namespace ProjectSavannah.domain
             Hunt(cell);
         }
 
-        internal override void UpdatePosition(World.cell currentCell)
+        internal override void UpdatePosition(Cell newCell)
         {
-            var prevCell = _world.GetCell(CurrentPosition.x, CurrentPosition.y);
-            prevCell.mammal = null;
-            CurrentPosition = new position(currentCell.x, currentCell.y);
-            currentCell.mammal = this;
+            var prevCell = CurrentCell;
+            prevCell.Mammal = null;
+            CurrentCell = newCell;
+            newCell.SetAnimal(this);
         }
 
-        public void Hunt(World.cell cell)
+        public void Hunt(Cell cell)
         {
             Random rand = new Random();
             if (rand.NextBool(20))
             {
-                cell.mammal?._kill();
-                cell.deadAnimals.Push(cell.mammal);
+                cell.Mammal?._kill();
+                cell.deadAnimals.Push(cell.Mammal);
                 UpdatePosition(cell);
                 _blockMovement();
             }

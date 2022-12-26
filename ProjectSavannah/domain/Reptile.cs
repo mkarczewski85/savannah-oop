@@ -12,11 +12,7 @@ namespace ProjectSavannah.domain
         int VenomAmount { get; set; }
         int VenomRegenerationRate { get; set; }
 
-        void Bite(World.cell cell);
+        void Bite(Cell cell);
 
-        static bool IsCellEmpty(World.cell cell)
-        {
-            return cell.reptile == null;
-        }
     }
 }
