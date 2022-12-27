@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public class Hyena : Animal, Mammal, Predator
     {
-        public Hyena(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public Hyena(int lifespan, int speed) : base(lifespan, speed)
         {
         }
 
@@ -26,7 +26,7 @@ namespace ProjectSavannah.domain
                 if (cell.deadAnimals.TryPop(out var animal))
                 {
                     // TODO
-                    
+
                 }
             }
             else _blockMovement();

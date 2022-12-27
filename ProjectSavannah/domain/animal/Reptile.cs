@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public interface Reptile
     {
@@ -15,7 +15,7 @@ namespace ProjectSavannah.domain
         void Bite(Cell cell);
 
         static Type GetType()
-        { 
+        {
             return typeof(Reptile);
         }
 

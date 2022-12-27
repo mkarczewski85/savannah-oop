@@ -5,7 +5,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public interface Mammal
     {
@@ -15,7 +15,7 @@ namespace ProjectSavannah.domain
         int CurrentWaterAmount { get; set; }
 
         static Type GetType()
-        { 
+        {
             return typeof(Mammal);
         }
     }

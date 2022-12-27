@@ -6,9 +6,9 @@ using System.Linq;
 using System.Runtime.CompilerServices;
 using System.Text;
 using System.Threading.Tasks;
-using static ProjectSavannah.domain.Animal;
+using static ProjectSavannah.domain.animal.Animal;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public abstract class Animal
     {
@@ -18,57 +18,30 @@ namespace ProjectSavannah.domain
         public int Speed { get; private set; }
         public int Lifespan { get; private set; }
         public bool IsAlive { get; private set; }
-        internal Cell CurrentCell;
-        internal readonly World _world;
+        internal Cell? CurrentCell;
         private bool _canMove;
 
-        public Animal(Cell cell, int lifespan, int speed, World world)
+        public Animal(int lifespan, int speed)
         {
             Id = Guid.NewGuid();
             Lifespan = lifespan;
             Speed = speed;
             IsAlive = true;
             Age = 0;
-            _world = world;
-            CurrentCell = cell;
             _canMove = true;
-        }
-
-        public enum Direction
-        {
-            NORTH,
-            SOUTH,
-            EAST,
-            WEST
         }
 
         public void Move()
         {
             _enableMovement();
+            Console.WriteLine($"{GetType()} {Id} moved to [{CurrentCell.x}][{CurrentCell.y}]");
             var random = new Random();
             Direction randomDirection = random.NextEnum<Direction>();
-            int newX = CurrentCell.x;
-            int newY = CurrentCell.y;
-            for (int i = 0; i < Speed; i++) 
+            for (int i = 0; i < Speed; i++)
             {
-                switch (randomDirection)
+                if (CurrentCell.CanMoveTowards(randomDirection) && _canMove)
                 {
-                    case Direction.NORTH:
-                        newY += -1;
-                        break;
-                    case Direction.SOUTH:
-                        newY += 1;
-                        break;
-                    case Direction.EAST:
-                        newX += 1;
-                        break;
-                    case Direction.WEST:
-                        newX += -1;
-                        break;
-                }
-                if (_world.WithinBoundaries(newX, newY) && _canMove)
-                {
-                    var nextCell = _world.GetCell((newX), (newY));
+                    var nextCell = CurrentCell.NextCellFrom(randomDirection);
                     HandleBehavior(nextCell);
                 }
                 else break;

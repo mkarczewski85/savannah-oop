@@ -6,11 +6,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public class Lion : Animal, Mammal, Predator
     {
-        public Lion(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public Lion(int lifespan, int speed) : base(lifespan, speed)
         {
         }
 
@@ -21,7 +21,8 @@ namespace ProjectSavannah.domain
 
         internal override void HandleBehavior(Cell cell)
         {
-            if (cell.IsEmpty(this)) {
+            if (cell.IsEmpty(this))
+            {
                 UpdatePosition(cell);
             }
             else _resolveCollision(cell);
@@ -32,8 +33,8 @@ namespace ProjectSavannah.domain
             if (cell.Mammal is Predator)
             {
                 _blockMovement();
-                return; 
-            }       
+                return;
+            }
             Hunt(cell);
         }
 

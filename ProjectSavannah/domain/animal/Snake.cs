@@ -6,26 +6,26 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
-    public class TokoBird : Animal, Bird
+    public class Snake : Animal, Reptile
     {
-        public TokoBird(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public Snake(int lifespan, int speed) : base(lifespan, speed)
         {
         }
 
-        public int FlightHeight { get; set; }
-        public int FoodAppetite { get; set; }
-        public int CurrentFoodAmount { get; set; }
+        public int VenomAmount { get; set; }
+        public int VenomRegenerationRate { get; set; }
+
 
         internal override void HandleBehavior(Cell cell)
         {
             if (cell.IsEmpty(this))
             {
                 UpdatePosition(cell);
-                if (!cell.IsEmpty(Reptile.GetType()))
+                if (cell.IsEmpty(Mammal.GetType()))
                 {
-                    Catch(cell);
+                    Bite(cell);
                 }
             }
             else _blockMovement();
@@ -34,19 +34,19 @@ namespace ProjectSavannah.domain
         internal override void UpdatePosition(Cell newCell)
         {
             var prevCell = CurrentCell;
-            prevCell.Bird = null;
+            prevCell.Reptile = null;
             CurrentCell = newCell;
             newCell.SetAnimal(this);
         }
 
-        public void Catch(Cell cell)
+        public void Bite(Cell cell)
         {
             Random rand = new Random();
             if (rand.NextBool(50))
             {
-                cell.Reptile?._kill();
-                cell.deadAnimals.Push(cell.Reptile);
-                cell.Reptile = null;
+                cell.Mammal?._kill();
+                cell.deadAnimals.Push(cell.Mammal);
+                cell.Mammal = null;
                 _blockMovement();
             }
         }

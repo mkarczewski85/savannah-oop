@@ -5,11 +5,11 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace ProjectSavannah.domain
+namespace ProjectSavannah.domain.animal
 {
     public class Antelope : Animal, Mammal
     {
-        public Antelope(Cell cell, int lifespan, int speed, World world) : base(cell, lifespan, speed, world)
+        public Antelope(int lifespan, int speed) : base(lifespan, speed)
         {
         }
 
