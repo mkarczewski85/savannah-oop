@@ -61,6 +61,11 @@ namespace ProjectSavannah.simulation
             }
         }
 
+        public bool IsEmpty()
+        { 
+            return Mammal == null && Bird == null && Reptile == null;
+        }
+
         public void SetAnimal(Animal animal)
         {
             switch (animal)

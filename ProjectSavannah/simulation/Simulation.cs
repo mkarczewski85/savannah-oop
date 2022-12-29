@@ -9,37 +9,36 @@ using System.Threading.Tasks;
 
 namespace ProjectSavannah.simulation
 {
-    internal class Simulation
+    public class Simulation
     {
 
         private bool _initialized;
         private bool _paused;
-        private double _fillPercentage;
-        private int _xSize;
-        private int _ySize;
-        private World? _world;
+        private double _density;
+        public int XSize { get; private set; }
+        public int YSize { get; private set; }
+        public World? World;
         private List<Animal>? _allAnimals;
 
 
-        public Simulation(int xSize = 100, int ySize = 100, double fillPercentage = 0.2)
+        public Simulation(int xSize = 100, int ySize = 100, int density = 20)
         {
-            _xSize = xSize;
-            _ySize = ySize;
-            _fillPercentage = fillPercentage;
+            XSize = xSize;
+            YSize = ySize;
+            _density = density;
             _initialized = false;
-            
         }
 
         public void Initialize()
         {
-            _world = new World(_xSize, _ySize);
+            World = new World(XSize, YSize);
             _allAnimals = new List<Animal>();
-            var numberOfAnimals = (int)Math.Round(((_world.xSize * _world.ySize) / 100) * _fillPercentage);
+            var numberOfAnimals = (int)Math.Round(((World.xSize * World.ySize) / 100) * _density);
             Random random = new Random();
             for (int i = 0; i < numberOfAnimals; i++)
             {
                 var animal = random.NextAnimal();
-                _world.AddAnimalAtRandom(animal);
+                World.AddAnimalAtRandom(animal);
                 _allAnimals.Add(animal);
             }
             _initialized = true;
@@ -50,10 +49,15 @@ namespace ProjectSavannah.simulation
             _validate(); 
             while (true) 
             {
-                _allAnimals.ForEach(animal => animal.Move());
+                Forward();
                 if (_paused) break;
                 Thread.Sleep(1000);
             }
+        }
+
+        public void Forward()
+        {
+            _allAnimals.FindAll(animal => animal.IsAlive is true).ForEach(animal => animal.Move());
         }
 
         public void Stop()

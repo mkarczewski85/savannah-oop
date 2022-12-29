@@ -34,7 +34,6 @@ namespace ProjectSavannah.domain.animal
         public void Move()
         {
             _enableMovement();
-            Console.WriteLine($"{GetType()} {Id} moved to [{CurrentCell.x}][{CurrentCell.y}]");
             var random = new Random();
             Direction randomDirection = random.NextEnum<Direction>();
             for (int i = 0; i < Speed; i++)
