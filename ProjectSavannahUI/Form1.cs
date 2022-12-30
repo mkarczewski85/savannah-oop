@@ -19,6 +19,7 @@ namespace ProjectSavannahUI
 
         private void SavannahMain_Load(object sender, EventArgs e)
         {
+            timer1.Interval = 1000 / speedValue.Value;
             _cellSize = (int)sizeValue.Value;
             _density = (int)densityValue.Value;
             _initializeSimulation();
@@ -96,11 +97,11 @@ namespace ProjectSavannahUI
             switch (cell)
             {
                 case Cell when cell.Bird != null && cell.Reptile == null:
-                    return HatchStyle.LightVertical;
+                    return HatchStyle.Wave;
                 case Cell when cell.Bird == null && cell.Reptile != null:
-                    return HatchStyle.LightHorizontal;
+                    return HatchStyle.Shingle;
                 case Cell when cell.Bird != null && cell.Reptile != null:
-                    return HatchStyle.DiagonalCross;
+                    return HatchStyle.SmallGrid;
                 default:
                     return null;
 
@@ -145,6 +146,11 @@ namespace ProjectSavannahUI
         private void btnReset_Click(object sender, EventArgs e)
         {
             Reset();
+        }
+
+        private void trackBar1_Scroll(object sender, EventArgs e)
+        {
+            timer1.Interval = 1000 / speedValue.Value;
         }
     }
 }

@@ -39,9 +39,12 @@
             this.densityValue = new System.Windows.Forms.NumericUpDown();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
+            this.speedValue = new System.Windows.Forms.TrackBar();
+            this.label3 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sizeValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.densityValue)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedValue)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -167,10 +170,32 @@
             this.label2.TabIndex = 8;
             this.label2.Text = "Pokrycie (%)";
             // 
+            // speedValue
+            // 
+            this.speedValue.Location = new System.Drawing.Point(797, 38);
+            this.speedValue.Maximum = 4;
+            this.speedValue.Minimum = 1;
+            this.speedValue.Name = "speedValue";
+            this.speedValue.Size = new System.Drawing.Size(130, 56);
+            this.speedValue.TabIndex = 9;
+            this.speedValue.Value = 2;
+            this.speedValue.Scroll += new System.EventHandler(this.trackBar1_Scroll);
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(723, 45);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(68, 20);
+            this.label3.TabIndex = 10;
+            this.label3.Text = "Prędkość";
+            // 
             // SavannahMain
             // 
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Inherit;
             this.ClientSize = new System.Drawing.Size(1148, 750);
+            this.Controls.Add(this.label3);
+            this.Controls.Add(this.speedValue);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.densityValue);
@@ -189,6 +214,7 @@
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.sizeValue)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.densityValue)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.speedValue)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -206,5 +232,7 @@
         private NumericUpDown densityValue;
         private Label label1;
         private Label label2;
+        private TrackBar speedValue;
+        private Label label3;
     }
 }
