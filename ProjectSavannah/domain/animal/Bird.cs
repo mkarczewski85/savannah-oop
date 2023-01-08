@@ -9,7 +9,7 @@ namespace ProjectSavannah.domain.animal
 {
     public interface Bird
     {
-        int FlightHeight { get; set; }
+        int FlightAltitude { get; set; }
         int FoodAppetite { get; set; }
         int CurrentFoodAmount { get; set; }
 

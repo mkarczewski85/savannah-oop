@@ -1,4 +1,5 @@
-﻿using ProjectSavannah.simulation;
+﻿using ProjectSavannah.domain.factory;
+using ProjectSavannah.simulation;
 using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
@@ -14,7 +15,7 @@ namespace ProjectSavannah.domain.animal
         {
         }
 
-        public int FlightHeight { get; set; }
+        public int FlightAltitude { get; set; }
         public int FoodAppetite { get; set; }
         public int CurrentFoodAmount { get; set; }
 
@@ -42,13 +43,41 @@ namespace ProjectSavannah.domain.animal
         public void Catch(Cell cell)
         {
             Random rand = new Random();
-            if (rand.NextBool(50))
+            if (CurrentFoodAmount < FoodAppetite && rand.NextBool(_parameters.TokobirdCatchSuccessProbability))
             {
-                cell.Reptile?._kill();
+                cell.Reptile?.Die();
                 cell.deadAnimals.Push(cell.Reptile);
                 cell.Reptile = null;
+                FoodAppetite = FoodAppetite.SubtractMinTo0(10);
+                CurrentFoodAmount = CurrentFoodAmount.AddUpMaxTo100(10);
                 _blockMovement();
             }
+        }
+
+        internal override void Die()
+        {
+            IsAlive = false;
+            CurrentCell.Bird = null;
+            CurrentCell.SetAsDeadAnimal(this);
+        }
+
+        internal override void Reproduce()
+        {
+            Random rand = new();
+            Optional<Cell> cellOpt = CurrentCell.GetEmptyNeighbourIfExists();
+            if (cellOpt.HasValue && rand.NextBool(_parameters.TokobirdFertility))
+            {
+                var cell = cellOpt.Value;
+                cell.AddNewbornAnimal(TokoBirdCreator.GetInstance().create());
+            }
+        }
+
+        internal override void MetabolicProcesses()
+        {
+            static bool runOutOf(int appetite, int amount) => appetite == 100 && amount == 0;
+            FoodAppetite = FoodAppetite.AddUpMaxTo100(_parameters.LionMetabolicRate);
+            CurrentFoodAmount = CurrentFoodAmount.SubtractMinTo0(_parameters.LionMetabolicRate);
+            if (runOutOf(FoodAppetite, CurrentFoodAmount)) Die();
         }
     }
 }

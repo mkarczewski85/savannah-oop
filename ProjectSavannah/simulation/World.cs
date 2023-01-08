@@ -13,8 +13,10 @@ namespace ProjectSavannah.simulation
     {
 
         private Cell[,] _grid;
+        private List<Animal>? _allAnimals;
         public int xSize { get; private set; }
         public int ySize { get; private set; }
+
         private Random random = new();
 
         public World(int xSize, int ySize)
@@ -29,6 +31,7 @@ namespace ProjectSavannah.simulation
             }
             this.xSize = xSize;
             this.ySize = ySize;
+            _allAnimals = new List<Animal>();
         }
 
         public Cell GetCell(int x, int y) 
@@ -41,6 +44,18 @@ namespace ProjectSavannah.simulation
             Cell? randomCell;
             do randomCell = random.NextItem(_grid);
             while (!randomCell.AddAnimalIfEmpty(animal));
+            AddAnimalToList(animal);
+        }
+
+        public void AddAnimalToList(Animal animal)
+        {
+            _allAnimals.Add(animal);
+        }
+
+        public void MoveAllAnimals()
+        {
+            _allAnimals.RemoveAll(animal => !animal.IsAlive);
+            _allAnimals.ForEach(animal => animal.Move());
         }
 
         public bool WithinBoundaries(int x, int y)

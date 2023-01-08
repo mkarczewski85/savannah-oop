@@ -97,7 +97,7 @@ namespace ProjectSavannahUI
             switch (cell)
             {
                 case Cell when cell.Bird != null && cell.Reptile == null:
-                    return HatchStyle.Wave;
+                    return HatchStyle.DashedDownwardDiagonal;
                 case Cell when cell.Bird == null && cell.Reptile != null:
                     return HatchStyle.Shingle;
                 case Cell when cell.Bird != null && cell.Reptile != null:

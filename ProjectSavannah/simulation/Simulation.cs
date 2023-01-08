@@ -18,7 +18,6 @@ namespace ProjectSavannah.simulation
         public int XSize { get; private set; }
         public int YSize { get; private set; }
         public World? World;
-        private List<Animal>? _allAnimals;
 
 
         public Simulation(int xSize = 100, int ySize = 100, int density = 20)
@@ -32,14 +31,12 @@ namespace ProjectSavannah.simulation
         public void Initialize()
         {
             World = new World(XSize, YSize);
-            _allAnimals = new List<Animal>();
             var numberOfAnimals = (int)Math.Round(((World.xSize * World.ySize) / 100) * _density);
             Random random = new Random();
             for (int i = 0; i < numberOfAnimals; i++)
             {
                 var animal = random.NextAnimal();
                 World.AddAnimalAtRandom(animal);
-                _allAnimals.Add(animal);
             }
             _initialized = true;
         }
@@ -57,7 +54,7 @@ namespace ProjectSavannah.simulation
 
         public void Forward()
         {
-            _allAnimals.FindAll(animal => animal.IsAlive is true).ForEach(animal => animal.Move());
+            World.MoveAllAnimals();
         }
 
         public void Stop()

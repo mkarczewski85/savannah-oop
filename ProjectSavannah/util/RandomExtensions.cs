@@ -13,11 +13,11 @@ namespace ProjectSavannah.util
 
         private static Dictionary<AnimalCreator, double> probabilities = new Dictionary<AnimalCreator, double>()
         {
-            { new LionCreator(), 0.1 },
-            { new AntelopeCreator(), 0.2 },
-            { new HyenaCreator(), 0.3 },
-            { new SnakeCreator(), 0.2 },
-            { new TokoBirdCreator(), 0.2 }
+            { AntelopeCreator.GetInstance(), 0.3 },
+            { LionCreator.GetInstance(), 0.1 },
+            { HyenaCreator.GetInstance(), 0.3 },
+            { SnakeCreator.GetInstance(), 0.1 },
+            { TokoBirdCreator.GetInstance(), 0.2 }
         };
 
         public static T NextEnum<T>(this Random random)
@@ -29,6 +29,11 @@ namespace ProjectSavannah.util
         public static bool NextBool(this Random random, int truePercentage = 50)
         {
             return random.NextDouble() < truePercentage / 100.0;
+        }
+
+        public static bool NextBool(this Random random, double chances)
+        {
+            return random.NextDouble() < chances;
         }
 
         public static T NextItem<T>(this Random random, T[,] array)

@@ -17,9 +17,10 @@ namespace ProjectSavannah.domain.animal
         public int Age { get; private set; }
         public int Speed { get; private set; }
         public int Lifespan { get; private set; }
-        public bool IsAlive { get; private set; }
+        public bool IsAlive { get; internal set; }
         internal Cell? CurrentCell;
         private bool _canMove;
+        internal Parameters _parameters;
 
         public Animal(int lifespan, int speed)
         {
@@ -29,10 +30,12 @@ namespace ProjectSavannah.domain.animal
             IsAlive = true;
             Age = 0;
             _canMove = true;
+            _parameters = Parameters.GetInstance();
         }
 
         public void Move()
         {
+            if (!IsAlive) return;
             _enableMovement();
             var random = new Random();
             Direction randomDirection = random.NextEnum<Direction>();
@@ -45,14 +48,29 @@ namespace ProjectSavannah.domain.animal
                 }
                 else break;
             }
-
+            _getOldAndDie();
+            MetabolicProcesses();
+            Reproduce();
         }
-
-        internal void _kill() => IsAlive = false;
 
         internal void _blockMovement() => _canMove = false;
 
         internal void _enableMovement() => _canMove = true;
+
+        internal void _getOldAndDie()
+        {
+            Age++;
+            if (Age > Lifespan) 
+            { 
+                Die();
+            }
+        }
+
+        internal abstract void Die();
+
+        internal abstract void Reproduce();
+
+        internal abstract void MetabolicProcesses();
 
         internal abstract void HandleBehavior(Cell cell);
 

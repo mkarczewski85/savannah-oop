@@ -10,7 +10,6 @@ namespace ProjectSavannah.domain.animal
     public interface Reptile
     {
         int VenomAmount { get; set; }
-        int VenomRegenerationRate { get; set; }
 
         void Bite(Cell cell);
 

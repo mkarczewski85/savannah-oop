@@ -138,7 +138,7 @@
             0,
             0});
             this.densityValue.Minimum = new decimal(new int[] {
-            10,
+            5,
             0,
             0,
             0});
@@ -173,7 +173,7 @@
             // speedValue
             // 
             this.speedValue.Location = new System.Drawing.Point(797, 38);
-            this.speedValue.Maximum = 4;
+            this.speedValue.Maximum = 5;
             this.speedValue.Minimum = 1;
             this.speedValue.Name = "speedValue";
             this.speedValue.Size = new System.Drawing.Size(130, 56);

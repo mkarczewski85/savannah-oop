@@ -1,4 +1,6 @@
-﻿using ProjectSavannah.simulation;
+﻿using ProjectSavannah.domain.factory;
+using ProjectSavannah.simulation;
+using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -25,8 +27,8 @@ namespace ProjectSavannah.domain.animal
                 UpdatePosition(cell);
                 if (cell.deadAnimals.TryPop(out var animal))
                 {
-                    // TODO
-
+                    CurrentFoodAmount = CurrentFoodAmount.AddUpMaxTo100(10);
+                    FoodAppetite = FoodAppetite.SubtractMinTo0(10);
                 }
             }
             else _blockMovement();
@@ -43,6 +45,46 @@ namespace ProjectSavannah.domain.animal
         public void Hunt(Cell cell)
         {
             throw new NotImplementedException("Hyenas do not hunt!");
+        }
+
+        internal override void Die()
+        {
+            IsAlive = false;
+            CurrentCell.Mammal = null;
+            CurrentCell.SetAsDeadAnimal(this);
+        }
+
+        internal override void Reproduce()
+        {
+            Random rand = new();
+            Optional<Cell> cellOpt = CurrentCell.GetEmptyNeighbourIfExists();
+            if (cellOpt.HasValue && rand.NextBool(_parameters.HyenaFertility))
+            {
+                var cell = cellOpt.Value;
+                cell.AddNewbornAnimal(HyenaCreator.GetInstance().create());
+            }
+        }
+
+        internal override void MetabolicProcesses()
+        {
+            EatAndDrink();
+            static bool runOutOf(int appetite, int amount) => appetite == 100 && amount == 0;
+            FoodAppetite = FoodAppetite.AddUpMaxTo100(_parameters.HyenaMetabolicRate);
+            WaterAppetite = WaterAppetite.AddUpMaxTo100(_parameters.HyenaMetabolicRate);
+            CurrentFoodAmount = CurrentFoodAmount.SubtractMinTo0(_parameters.HyenaDehydrationRate);
+            CurrentWaterAmount = CurrentWaterAmount.SubtractMinTo0(_parameters.HyenaDehydrationRate);
+            if (runOutOf(FoodAppetite, CurrentFoodAmount) ||
+                runOutOf(WaterAppetite, CurrentWaterAmount)) Die();
+        }
+
+        public void EatAndDrink()
+        {
+            // hyenas only eats carrion
+            if (CurrentCell.HasWaterSupply())
+            {
+                WaterAppetite = WaterAppetite.SubtractMinTo0(_parameters.HyenaDehydrationRate);
+                CurrentWaterAmount = CurrentWaterAmount.AddUpMaxTo100(_parameters.HyenaDehydrationRate);
+            }
         }
     }
 }

@@ -1,4 +1,5 @@
-﻿using ProjectSavannah.simulation;
+﻿using ProjectSavannah.domain.factory;
+using ProjectSavannah.simulation;
 using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
@@ -15,8 +16,6 @@ namespace ProjectSavannah.domain.animal
         }
 
         public int VenomAmount { get; set; }
-        public int VenomRegenerationRate { get; set; }
-
 
         internal override void HandleBehavior(Cell cell)
         {
@@ -42,13 +41,37 @@ namespace ProjectSavannah.domain.animal
         public void Bite(Cell cell)
         {
             Random rand = new Random();
-            if (rand.NextBool(50))
+            if (rand.NextBool(30) && VenomAmount > 10)
             {
-                cell.Mammal?._kill();
+                cell.Mammal?.Die();
                 cell.deadAnimals.Push(cell.Mammal);
                 cell.Mammal = null;
+                VenomAmount.SubtractMinTo0(10);
                 _blockMovement();
             }
+        }
+
+        internal override void Die()
+        {
+            IsAlive = false;
+            CurrentCell.Reptile = null;
+            CurrentCell.SetAsDeadAnimal(this);
+        }
+
+        internal override void Reproduce()
+        {
+            Random rand = new Random();
+            Optional<Cell> cellOpt = CurrentCell.GetEmptyNeighbourIfExists();
+            if (cellOpt.HasValue && rand.NextBool(_parameters.SnakeFertility))
+            {
+                var cell = cellOpt.Value;
+                cell.AddNewbornAnimal(SnakeCreator.GetInstance().create());
+            }
+        }
+
+        internal override void MetabolicProcesses()
+        {
+            VenomAmount.AddUpMaxTo100(_parameters.SnakeVenomRegenerationRate);
         }
     }
 }

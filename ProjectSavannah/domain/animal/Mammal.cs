@@ -14,6 +14,8 @@ namespace ProjectSavannah.domain.animal
         int CurrentFoodAmount { get; set; }
         int CurrentWaterAmount { get; set; }
 
+        void EatAndDrink();
+
         static Type GetType()
         {
             return typeof(Mammal);

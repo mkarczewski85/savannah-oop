@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSavannah.domain.factory
 {
-    internal interface AnimalCreator
+    public interface AnimalCreator
     {
         Animal create(); 
     }

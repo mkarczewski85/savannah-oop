@@ -1,4 +1,6 @@
 ﻿using ProjectSavannah.domain.animal;
+using ProjectSavannah.domain.artefacts;
+using ProjectSavannah.util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -14,6 +16,8 @@ namespace ProjectSavannah.simulation
         public Animal? Bird { get; set; }
         public Animal? Reptile { get; set; }
         public Stack<Animal> deadAnimals;
+        public WaterSupply? WaterSupply { get; set; }
+        public PlantsSupply? PlantsSupply { get; set; }
         private World _world;
         public int x;
         public int y;
@@ -27,6 +31,7 @@ namespace ProjectSavannah.simulation
             Reptile = null;
             deadAnimals = new Stack<Animal>();
             _world = world;
+            _supplyWithWaterAndPlants();
         }
 
         public bool AddAnimalIfEmpty(Animal animal)
@@ -77,6 +82,11 @@ namespace ProjectSavannah.simulation
             animal.CurrentCell = this;
         }
 
+        public void SetAsDeadAnimal(Animal animal)
+        {
+            deadAnimals.Push(animal);
+        }
+
         public bool CanMoveTowards(Direction direction) 
         {
             var deltas = _calculateXYDelta(direction);
@@ -88,6 +98,31 @@ namespace ProjectSavannah.simulation
 
             var deltas = _calculateXYDelta(direction);
             return _world.GetCell(deltas.Item1, deltas.Item2);
+        }
+
+        public Optional<Cell> GetEmptyNeighbourIfExists()
+        {
+            foreach (Direction direction in Enum.GetValues(typeof(Direction)))
+            {
+                if (CanMoveTowards(direction)) return Optional<Cell>.Of(NextCellFrom(direction));
+            }
+            return Optional<Cell>.Empty();
+        }
+
+        public void AddNewbornAnimal(Animal animal)
+        {
+            SetAnimal(animal);
+            _world.AddAnimalToList(animal);
+        }
+
+        public bool HasWaterSupply()
+        {
+            return WaterSupply != null;
+        }
+
+        public bool HasPlantsSupply()
+        { 
+            return PlantsSupply != null;
         }
 
         private Tuple<int, int> _calculateXYDelta(Direction direction)
@@ -110,6 +145,20 @@ namespace ProjectSavannah.simulation
                     break;
             }
             return Tuple.Create(newX, newY);
+        }
+
+        private void _supplyWithWaterAndPlants()
+        {
+            Random random = new();
+            var parameters = Parameters.GetInstance();
+            if (random.NextBool(parameters.WaterSupplyCoverage))
+            {
+                WaterSupply = new();
+            }
+            if (random.NextBool(parameters.PlantsSupplyCoverage))
+            {
+                PlantsSupply = new();
+            }
         }
     }
 }

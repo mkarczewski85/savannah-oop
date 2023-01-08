@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace ProjectSavannah.domain.artefacts
 {
-    internal class WaterSupply
+    public class WaterSupply
     {
     }
 }
