@@ -52,6 +52,7 @@ namespace ProjectSavannah.domain.animal
             IsAlive = false;
             CurrentCell.Mammal = null;
             CurrentCell.SetAsDeadAnimal(this);
+            _notifyEvent(AnimalEventType.ANIMAL_DEATH);
         }
 
         internal override void Reproduce()
@@ -62,6 +63,7 @@ namespace ProjectSavannah.domain.animal
             {
                 var cell = cellOpt.Value;
                 cell.AddNewbornAnimal(HyenaCreator.GetInstance().create());
+                _notifyEvent(AnimalEventType.ANIMAL_BIRTH);
             }
         }
 

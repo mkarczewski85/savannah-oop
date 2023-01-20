@@ -18,8 +18,10 @@ namespace ProjectSavannah.simulation
         public int ySize { get; private set; }
 
         private Random random = new();
+        private Action<string> _eventCallback;
 
-        public World(int xSize, int ySize)
+
+        public World(int xSize, int ySize, Action<string> eventCallback)
         {
             _grid = new Cell[xSize, ySize];
             for (int i = 0; i < _grid.GetLength(0); i++)
@@ -32,6 +34,13 @@ namespace ProjectSavannah.simulation
             this.xSize = xSize;
             this.ySize = ySize;
             _allAnimals = new List<Animal>();
+            _eventCallback = eventCallback;
+        }
+
+        public void Disconnect()
+        {
+            _allAnimals?.Clear();
+            _eventCallback = null;
         }
 
         public Cell GetCell(int x, int y) 
@@ -49,18 +58,25 @@ namespace ProjectSavannah.simulation
 
         public void AddAnimalToList(Animal animal)
         {
+            animal.AnimalEvent += _onEvent;
             _allAnimals.Add(animal);
         }
 
         public void MoveAllAnimals()
         {
-            _allAnimals.RemoveAll(animal => !animal.IsAlive);
-            _allAnimals.ForEach(animal => animal.Move());
+            _allAnimals?.FindAll(animal => animal.IsAlive).ForEach(animal => animal.Move());
         }
 
         public bool WithinBoundaries(int x, int y)
         {
             return (x >= 0 && y >= 0 && x < xSize && y < ySize);
+        }
+
+        private void _onEvent(Animal sender, AnimalEventType message)
+        {
+            if (message is AnimalEventType.ANIMAL_DEATH)
+                _allAnimals?.Remove(sender);
+            _eventCallback(EventToDescriptionDict.MapToDescription(message, sender));
         }
 
     }

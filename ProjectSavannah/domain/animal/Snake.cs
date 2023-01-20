@@ -48,6 +48,7 @@ namespace ProjectSavannah.domain.animal
                 cell.Mammal = null;
                 VenomAmount.SubtractMinTo0(10);
                 _blockMovement();
+                _notifyEvent(AnimalEventType.BITE_SUCCESS);
             }
         }
 
@@ -56,6 +57,7 @@ namespace ProjectSavannah.domain.animal
             IsAlive = false;
             CurrentCell.Reptile = null;
             CurrentCell.SetAsDeadAnimal(this);
+            _notifyEvent(AnimalEventType.ANIMAL_DEATH);
         }
 
         internal override void Reproduce()
@@ -66,6 +68,7 @@ namespace ProjectSavannah.domain.animal
             {
                 var cell = cellOpt.Value;
                 cell.AddNewbornAnimal(SnakeCreator.GetInstance().create());
+                _notifyEvent(AnimalEventType.ANIMAL_BIRTH);
             }
         }
 

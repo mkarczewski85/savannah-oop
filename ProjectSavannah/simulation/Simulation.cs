@@ -18,19 +18,22 @@ namespace ProjectSavannah.simulation
         public int XSize { get; private set; }
         public int YSize { get; private set; }
         public World? World;
+        private Action<string> _eventCallback;
 
 
-        public Simulation(int xSize = 100, int ySize = 100, int density = 20)
+        public Simulation(int xSize, int ySize, int density, Action<string> eventCallback)
         {
             XSize = xSize;
             YSize = ySize;
             _density = density;
             _initialized = false;
+            _eventCallback = eventCallback;
         }
 
         public void Initialize()
         {
-            World = new World(XSize, YSize);
+            if (World != null) World.Disconnect();
+            World = new World(XSize, YSize, _eventCallback);
             var numberOfAnimals = (int)Math.Round(((World.xSize * World.ySize) / 100) * _density);
             Random random = new Random();
             for (int i = 0; i < numberOfAnimals; i++)

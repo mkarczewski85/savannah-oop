@@ -10,6 +10,9 @@ using static ProjectSavannah.domain.animal.Animal;
 
 namespace ProjectSavannah.domain.animal
 {
+
+    public delegate void AnimalEventHandler(Animal sender, AnimalEventType eventType);
+
     public abstract class Animal
     {
 
@@ -21,6 +24,8 @@ namespace ProjectSavannah.domain.animal
         internal Cell? CurrentCell;
         private bool _canMove;
         internal Parameters _parameters;
+
+        public event AnimalEventHandler AnimalEvent;
 
         public Animal(int lifespan, int speed)
         {
@@ -63,6 +68,14 @@ namespace ProjectSavannah.domain.animal
             if (Age > Lifespan) 
             { 
                 Die();
+            }
+        }
+
+        internal void _notifyEvent(AnimalEventType message)
+        {
+            if (AnimalEvent != null)
+            {
+                AnimalEvent(this, message);
             }
         }
 

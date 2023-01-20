@@ -62,7 +62,7 @@ namespace ProjectSavannah.domain.animal
                 _blockMovement();
                 CurrentFoodAmount = CurrentFoodAmount.AddUpMaxTo100(10);
                 FoodAppetite = FoodAppetite.SubtractMinTo0(10);
-
+                _notifyEvent(AnimalEventType.HUNT_SUCCESS);
             }
         }
 
@@ -71,6 +71,7 @@ namespace ProjectSavannah.domain.animal
             IsAlive = false;
             CurrentCell.Mammal = null;
             CurrentCell.SetAsDeadAnimal(this);
+            _notifyEvent(AnimalEventType.ANIMAL_DEATH);
         }
 
         internal override void Reproduce()
@@ -81,6 +82,7 @@ namespace ProjectSavannah.domain.animal
             {
                 var cell = cellOpt.Value;
                 cell.AddNewbornAnimal(LionCreator.GetInstance().create());
+                _notifyEvent(AnimalEventType.ANIMAL_BIRTH);
             }
         }
 

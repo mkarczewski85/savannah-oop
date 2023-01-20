@@ -51,6 +51,7 @@ namespace ProjectSavannah.domain.animal
                 FoodAppetite = FoodAppetite.SubtractMinTo0(10);
                 CurrentFoodAmount = CurrentFoodAmount.AddUpMaxTo100(10);
                 _blockMovement();
+                _notifyEvent(AnimalEventType.CATCH_SUCCESS);
             }
         }
 
@@ -59,6 +60,7 @@ namespace ProjectSavannah.domain.animal
             IsAlive = false;
             CurrentCell.Bird = null;
             CurrentCell.SetAsDeadAnimal(this);
+            _notifyEvent(AnimalEventType.ANIMAL_DEATH);
         }
 
         internal override void Reproduce()
@@ -69,6 +71,7 @@ namespace ProjectSavannah.domain.animal
             {
                 var cell = cellOpt.Value;
                 cell.AddNewbornAnimal(TokoBirdCreator.GetInstance().create());
+                _notifyEvent(AnimalEventType.ANIMAL_BIRTH);
             }
         }
 

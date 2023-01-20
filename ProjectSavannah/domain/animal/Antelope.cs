@@ -39,6 +39,7 @@ namespace ProjectSavannah.domain.animal
             IsAlive = false;
             CurrentCell.Mammal = null;
             CurrentCell.SetAsDeadAnimal(this);
+            _notifyEvent(AnimalEventType.ANIMAL_DEATH);
         }
 
         internal override void UpdatePosition(Cell newCell)
@@ -57,6 +58,7 @@ namespace ProjectSavannah.domain.animal
             {
                 var cell = cellOpt.Value;
                 cell.AddNewbornAnimal(AntelopeCreator.GetInstance().create());
+                _notifyEvent(AnimalEventType.ANIMAL_BIRTH);
             }
         }
 
