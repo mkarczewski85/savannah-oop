@@ -44,30 +44,30 @@
             this.eventsLogPanel = new System.Windows.Forms.GroupBox();
             this.eventsList = new System.Windows.Forms.ListBox();
             this.legendBox = new System.Windows.Forms.GroupBox();
-            this.lionLegendBox = new System.Windows.Forms.PictureBox();
-            this.antelopeLegendBox = new System.Windows.Forms.PictureBox();
-            this.hyenaLegendBox = new System.Windows.Forms.PictureBox();
-            this.birdLegendBox = new System.Windows.Forms.PictureBox();
-            this.snakeLegendBox = new System.Windows.Forms.PictureBox();
-            this.snakeBirdLegendBox = new System.Windows.Forms.PictureBox();
-            this.label4 = new System.Windows.Forms.Label();
-            this.label5 = new System.Windows.Forms.Label();
-            this.label6 = new System.Windows.Forms.Label();
-            this.label7 = new System.Windows.Forms.Label();
-            this.label8 = new System.Windows.Forms.Label();
             this.label9 = new System.Windows.Forms.Label();
+            this.label8 = new System.Windows.Forms.Label();
+            this.label7 = new System.Windows.Forms.Label();
+            this.label6 = new System.Windows.Forms.Label();
+            this.label5 = new System.Windows.Forms.Label();
+            this.label4 = new System.Windows.Forms.Label();
+            this.snakeBirdLegendBox = new System.Windows.Forms.PictureBox();
+            this.snakeLegendBox = new System.Windows.Forms.PictureBox();
+            this.birdLegendBox = new System.Windows.Forms.PictureBox();
+            this.hyenaLegendBox = new System.Windows.Forms.PictureBox();
+            this.antelopeLegendBox = new System.Windows.Forms.PictureBox();
+            this.lionLegendBox = new System.Windows.Forms.PictureBox();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.sizeValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.densityValue)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.speedValue)).BeginInit();
             this.eventsLogPanel.SuspendLayout();
             this.legendBox.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lionLegendBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.antelopeLegendBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hyenaLegendBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.birdLegendBox)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.snakeLegendBox)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.snakeBirdLegendBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.snakeLegendBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.birdLegendBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hyenaLegendBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.antelopeLegendBox)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lionLegendBox)).BeginInit();
             this.SuspendLayout();
             // 
             // pictureBox1
@@ -110,6 +110,7 @@
             this.btnSettings.TabIndex = 3;
             this.btnSettings.Text = "Parametry";
             this.btnSettings.UseVisualStyleBackColor = true;
+            this.btnSettings.Click += new System.EventHandler(this.btnSettings_Click);
             // 
             // timer1
             // 
@@ -252,89 +253,14 @@
             this.legendBox.TabStop = false;
             this.legendBox.Text = "Legenda:";
             // 
-            // lionLegendBox
+            // label9
             // 
-            this.lionLegendBox.Location = new System.Drawing.Point(17, 59);
-            this.lionLegendBox.Name = "lionLegendBox";
-            this.lionLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.lionLegendBox.TabIndex = 0;
-            this.lionLegendBox.TabStop = false;
-            // 
-            // antelopeLegendBox
-            // 
-            this.antelopeLegendBox.Location = new System.Drawing.Point(17, 124);
-            this.antelopeLegendBox.Name = "antelopeLegendBox";
-            this.antelopeLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.antelopeLegendBox.TabIndex = 13;
-            this.antelopeLegendBox.TabStop = false;
-            // 
-            // hyenaLegendBox
-            // 
-            this.hyenaLegendBox.Location = new System.Drawing.Point(17, 189);
-            this.hyenaLegendBox.Name = "hyenaLegendBox";
-            this.hyenaLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.hyenaLegendBox.TabIndex = 13;
-            this.hyenaLegendBox.TabStop = false;
-            // 
-            // birdLegendBox
-            // 
-            this.birdLegendBox.Location = new System.Drawing.Point(257, 59);
-            this.birdLegendBox.Name = "birdLegendBox";
-            this.birdLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.birdLegendBox.TabIndex = 13;
-            this.birdLegendBox.TabStop = false;
-            // 
-            // snakeLegendBox
-            // 
-            this.snakeLegendBox.Location = new System.Drawing.Point(257, 124);
-            this.snakeLegendBox.Name = "snakeLegendBox";
-            this.snakeLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.snakeLegendBox.TabIndex = 13;
-            this.snakeLegendBox.TabStop = false;
-            // 
-            // snakeBirdLegendBox
-            // 
-            this.snakeBirdLegendBox.Location = new System.Drawing.Point(257, 189);
-            this.snakeBirdLegendBox.Name = "snakeBirdLegendBox";
-            this.snakeBirdLegendBox.Size = new System.Drawing.Size(48, 42);
-            this.snakeBirdLegendBox.TabIndex = 13;
-            this.snakeBirdLegendBox.TabStop = false;
-            // 
-            // label4
-            // 
-            this.label4.AutoSize = true;
-            this.label4.Location = new System.Drawing.Point(71, 71);
-            this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(35, 20);
-            this.label4.TabIndex = 14;
-            this.label4.Text = "Lew";
-            // 
-            // label5
-            // 
-            this.label5.AutoSize = true;
-            this.label5.Location = new System.Drawing.Point(71, 134);
-            this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(69, 20);
-            this.label5.TabIndex = 15;
-            this.label5.Text = "Antylopa";
-            // 
-            // label6
-            // 
-            this.label6.AutoSize = true;
-            this.label6.Location = new System.Drawing.Point(71, 198);
-            this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(48, 20);
-            this.label6.TabIndex = 16;
-            this.label6.Text = "Hiena";
-            // 
-            // label7
-            // 
-            this.label7.AutoSize = true;
-            this.label7.Location = new System.Drawing.Point(311, 71);
-            this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(73, 20);
-            this.label7.TabIndex = 17;
-            this.label7.Text = "Ptak Toko";
+            this.label9.AutoSize = true;
+            this.label9.Location = new System.Drawing.Point(311, 198);
+            this.label9.Name = "label9";
+            this.label9.Size = new System.Drawing.Size(75, 20);
+            this.label9.TabIndex = 19;
+            this.label9.Text = "Ptak i wąż";
             // 
             // label8
             // 
@@ -345,14 +271,89 @@
             this.label8.TabIndex = 18;
             this.label8.Text = "Wąż";
             // 
-            // label9
+            // label7
             // 
-            this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(311, 198);
-            this.label9.Name = "label9";
-            this.label9.Size = new System.Drawing.Size(75, 20);
-            this.label9.TabIndex = 19;
-            this.label9.Text = "Ptak i wąż";
+            this.label7.AutoSize = true;
+            this.label7.Location = new System.Drawing.Point(311, 71);
+            this.label7.Name = "label7";
+            this.label7.Size = new System.Drawing.Size(73, 20);
+            this.label7.TabIndex = 17;
+            this.label7.Text = "Ptak Toko";
+            // 
+            // label6
+            // 
+            this.label6.AutoSize = true;
+            this.label6.Location = new System.Drawing.Point(71, 198);
+            this.label6.Name = "label6";
+            this.label6.Size = new System.Drawing.Size(48, 20);
+            this.label6.TabIndex = 16;
+            this.label6.Text = "Hiena";
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(71, 134);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(69, 20);
+            this.label5.TabIndex = 15;
+            this.label5.Text = "Antylopa";
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(71, 71);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(35, 20);
+            this.label4.TabIndex = 14;
+            this.label4.Text = "Lew";
+            // 
+            // snakeBirdLegendBox
+            // 
+            this.snakeBirdLegendBox.Location = new System.Drawing.Point(257, 189);
+            this.snakeBirdLegendBox.Name = "snakeBirdLegendBox";
+            this.snakeBirdLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.snakeBirdLegendBox.TabIndex = 13;
+            this.snakeBirdLegendBox.TabStop = false;
+            // 
+            // snakeLegendBox
+            // 
+            this.snakeLegendBox.Location = new System.Drawing.Point(257, 124);
+            this.snakeLegendBox.Name = "snakeLegendBox";
+            this.snakeLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.snakeLegendBox.TabIndex = 13;
+            this.snakeLegendBox.TabStop = false;
+            // 
+            // birdLegendBox
+            // 
+            this.birdLegendBox.Location = new System.Drawing.Point(257, 59);
+            this.birdLegendBox.Name = "birdLegendBox";
+            this.birdLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.birdLegendBox.TabIndex = 13;
+            this.birdLegendBox.TabStop = false;
+            // 
+            // hyenaLegendBox
+            // 
+            this.hyenaLegendBox.Location = new System.Drawing.Point(17, 189);
+            this.hyenaLegendBox.Name = "hyenaLegendBox";
+            this.hyenaLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.hyenaLegendBox.TabIndex = 13;
+            this.hyenaLegendBox.TabStop = false;
+            // 
+            // antelopeLegendBox
+            // 
+            this.antelopeLegendBox.Location = new System.Drawing.Point(17, 124);
+            this.antelopeLegendBox.Name = "antelopeLegendBox";
+            this.antelopeLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.antelopeLegendBox.TabIndex = 13;
+            this.antelopeLegendBox.TabStop = false;
+            // 
+            // lionLegendBox
+            // 
+            this.lionLegendBox.Location = new System.Drawing.Point(17, 59);
+            this.lionLegendBox.Name = "lionLegendBox";
+            this.lionLegendBox.Size = new System.Drawing.Size(48, 42);
+            this.lionLegendBox.TabIndex = 0;
+            this.lionLegendBox.TabStop = false;
             // 
             // SavannahMain
             // 
@@ -384,12 +385,12 @@
             this.eventsLogPanel.ResumeLayout(false);
             this.legendBox.ResumeLayout(false);
             this.legendBox.PerformLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.lionLegendBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.antelopeLegendBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.hyenaLegendBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.birdLegendBox)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.snakeLegendBox)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.snakeBirdLegendBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.snakeLegendBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.birdLegendBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.hyenaLegendBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.antelopeLegendBox)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.lionLegendBox)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

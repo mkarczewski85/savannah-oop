@@ -31,9 +31,6 @@ namespace ProjectSavannah.simulation
         public double HyenaFertility { get; set; }
         public double TokobirdFertility { get; set; }
 
-        public double WorldWaterSupply { get; set; }
-        public double WorldPlantsSupply { get; set; }
-
         public int SnakeVenomRegenerationRate { get; set; }
 
         public double LionHuntSuccessProbability { get; set; }
@@ -75,9 +72,6 @@ namespace ProjectSavannah.simulation
             SnakeFertility = Constants.SNAKE_FERTILITY;
             HyenaFertility = Constants.HYENA_FERTILITY;
             TokobirdFertility = Constants.TOKOBIRD_FERTILITY;
-
-            WorldWaterSupply = Constants.WORLD_WATER_SUPPLY;
-            WorldPlantsSupply = Constants.WORLD_PLANTS_SUPPLY;
 
             SnakeVenomRegenerationRate = Constants.SNAKE_VENOM_REGENERATION_RATE;
 

@@ -3,6 +3,7 @@ using ProjectSavannah.simulation;
 using System.Drawing;
 using System.Drawing.Drawing2D;
 using System.Windows.Forms;
+using static System.Windows.Forms.DataFormats;
 
 namespace ProjectSavannahUI
 {
@@ -208,6 +209,12 @@ namespace ProjectSavannahUI
         private void groupBox1_Enter(object sender, EventArgs e)
         {
 
+        }
+
+        private void btnSettings_Click(object sender, EventArgs e)
+        {
+            Form2 form2 = new Form2();
+            form2.ShowDialog();
         }
     }
 }
